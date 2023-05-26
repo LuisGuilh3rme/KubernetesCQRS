@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cqrs-dep
+  namespace: k8s-demo-guilherme
+  labels:
+    app: cqrs
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: cqrs
+  template:
+    metadata:
+      namespace: k8s-demo-guilherme
+      name: cqrs-pod
+      labels:
+        app: cqrs
+    spec:
+      containers:
+      - name: dockercqrs
+        image: luisguilhermesilva/dockercqrs:latest
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+      - name: mongo
+        image: luisguilhermesilva/mongo:2023
+        ports:
+        - containerPort: 27017
